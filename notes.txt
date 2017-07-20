@@ -1,0 +1,21 @@
+const Tx = require('ethereumjs-tx')
+
+const Buffer_to_hex = function(buf, add_prefix=true) {
+  return (add_prefix ? '0x' : '') + buf.toString('hex')
+}
+
+// param:  hex-encoded string => signed raw transaction
+// return: txData object      => transaction attributes
+const decode_rawTx = function(rawTx) {
+  let tx = new Tx(rawTx)
+  let txData = {
+    nonce:    Buffer_to_hex(tx.nonce),
+    gasPrice: Buffer_to_hex(tx.gasPrice),
+    gasLimit: Buffer_to_hex(tx.gasLimit),
+    to:       Buffer_to_hex(tx.to),
+    value:    Buffer_to_hex(tx.value),
+    data:     Buffer_to_hex(tx.data, false),
+    chainId:  tx._chainId
+  }
+  return txData
+}
