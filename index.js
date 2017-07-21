@@ -11,7 +11,7 @@ const format_fields = function(fields, rawData, to_hex, add_prefix) {
   let txData = {}
 
   fields.forEach((field, index) => {
-    if (rawData[index] !== undefined) {
+    if (rawData[index] && rawData[index].length) {
       txData[field] = to_hex ? rlp.bufferToHex(rawData[index], add_prefix) : rawData[index]
     }
   })
