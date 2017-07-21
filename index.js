@@ -22,7 +22,7 @@ const format_fields = function(fields, rawData, to_hex, add_prefix) {
 // ===
 // API
 // ===
-const unsign = function(rawTx, to_hex=true, add_prefix=true, include_signature=false) {
+const unsign = function(rawTx, to_hex=true, add_prefix=true, include_signature=false, add_signature_prefix=false) {
   let rawData
   if (typeof rawTx === 'string') {
     rawTx = Buffer.from(rlp.stripHexPrefix(rawTx), 'hex')
@@ -47,7 +47,7 @@ const unsign = function(rawTx, to_hex=true, add_prefix=true, include_signature=f
   let txData = format_fields(field_sets.params, rawData.slice(0, field_sets.params.length), to_hex, add_prefix)
 
   if (include_signature) {
-    let signature = format_fields(field_sets.signature, rawData.slice(field_sets.params.length), to_hex, add_prefix)
+    let signature = format_fields(field_sets.signature, rawData.slice(field_sets.params.length), to_hex, add_signature_prefix)
     return {txData, signature}
   }
   else {
